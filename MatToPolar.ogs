@@ -1,0 +1,52 @@
+double theta;
+double sin;
+double lx;
+double tmp,tmp2;
+double x, y;
+double stepnum,step;
+
+newsheet name:=result cols:=2;
+
+page.active=1;
+
+stepnum=100;
+
+lx=300;
+
+step=2*pi/stepnum;
+
+loop(ii,1,lx){
+    loop(jj,1,lx/2){
+	x=jj-0.5-lx/2;
+	y=ii-0.5-lx/2;
+	sin=y/sqrt(x^2+y^2);
+        theta=asin(sin);
+	2!cell($((ii-1)*lx+jj),(1))=Pi*3/2-theta;
+	2!cell($((ii-1)*lx+jj),(2))=1!cell($(jj),ii);
+    }
+    loop(jj,lx/2+1,lx){
+	x=jj-0.5-lx/2;
+	y=ii-0.5-lx/2;
+	sin=y/sqrt(x^2+y^2);
+        theta=asin(sin);
+	2!cell($((ii-1)*lx+jj),(1))=theta+Pi/2;
+	2!cell($((ii-1)*lx+jj),(2))=1!cell($(jj),ii);
+    }
+}
+watch;
+page.active=2;
+
+newsheet name:=sum col:=2;
+
+loop(kk,1,stepnum){
+    3!cell($(kk),(1))=kk*step;
+    3!cell($(kk),(2))=0;
+}
+
+loop(kk,1,lx*lx){
+    tmp=2!cell($(kk),(1))/step;
+    tmp2=3!cell($(int(tmp)+1),(2))+2!cell($(kk),(2));
+    3!cell($(int(tmp)+1),(2))=tmp2;
+}
+watch;
+page.active=3;
