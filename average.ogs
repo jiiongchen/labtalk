@@ -1,0 +1,24 @@
+
+// 定义变量
+int nCols = wks.ncols;
+int nRows = 336;
+int newCol;
+double a;
+
+//newsheet name:=average cols:=nCols/2;
+page.active=1;
+iii=0;
+
+// 循环遍历每一列
+for (int ii = 2; ii <= nCols; ii += 2){
+    iii+=1;
+    jjj=0;
+    //newsheet name:=summary cols:=8;
+    // 循环遍历每四行
+    for (int jj = 1; jj <= nRows; jj += 4){
+        // 计算平均值并输出到新表格中;
+       jjj+=1;
+        a=(cell($(jj),$(ii)) + cell($(jj+1), $(ii)) + cell($(jj+2),$(ii)) + cell($(jj+3),$(ii))) / 4.0;
+        2!cell($(jjj),$(iii))=a;
+    }
+}
