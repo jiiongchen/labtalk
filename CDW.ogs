@@ -6,7 +6,7 @@ double  MyR;
 page.active=1;
 loop(ii,3,wks.ncols) {
     fitpoly iy:=(1,$(ii)) polyorder:=2 coef:=dscoef err:=dserr AdjRSq:=MyR;
-    2!cell($(ii-2),1)$ = col($(ii))[L]$;
+    //2!cell($(ii-2),1)$ = col($(ii))[L]$;
     2!cell($(ii-2),2) = dscoef[1];
     2!cell($(ii-2),3) = dserr[1];
     2!cell($(ii-2),4) = dscoef[2];
@@ -25,6 +25,11 @@ loop(ii,1,42) {
     a=2!cell($(ii),2)+2!cell($(84-ii+1),2);
     3!cell($(ii),1) = ii+6;
     3!cell($(ii),2) = a/2.0;
+    if((ii - 3) % 4 == 0)
+    {
+        newsheet name:=sha col:=1;
+        3!cell($(ii),3) = 3!cell($(ii),2);
+    };
 };
 watch;
 page.active=3;
