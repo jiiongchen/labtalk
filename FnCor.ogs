@@ -1,0 +1,21 @@
+// 获取列数
+page.active = 1; int nCols = wks.nCols;
+
+
+for(int i=2; i<=nCols; i++) {
+    // 获取n0
+    double n0 = 2!cell(89, $(i));
+    
+    // 对于sheet1的第i列的每一个元素
+    for(int j=1; j<=wks.nRows; j++) {
+        // 获取x
+        double x =1!cell($(j), 1);
+        
+        // 计算结果
+        int c=89+x*4;
+        double result = 1!cell($(j), $(i)) - n0 * 2!cell($(c), $(i));
+        
+        // 存储结果到sheet3
+        3!cell($(j), $(i)) = result;
+    }
+}
