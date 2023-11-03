@@ -1,5 +1,5 @@
 newsheet name:=exp col:=3;
-page.active= [Book1]exp!;
+page.active= "exp";
 
 range rr1 = [Book1]Sheet1!col(1); // 定义源范围
 range rr2 = [Book1]exp!col(1); // 定义目标范围
