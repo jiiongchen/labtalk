@@ -11,7 +11,7 @@ fitLR (1,2);
 %f = "exp(fitlr.a+fitlr.b*(col(1)))";
 wks.col3.SetFormula(f);
 
-[Book1]power!cell(1,2)=fitlr.b;
+[Book1]power!cell(1,2)=fitlr.b;//power
 [Book1]power!cell(2,2)=fitlr.berr;
 
 range rr1 = [Book1]Sheet1!col(1); // 定义源范围
