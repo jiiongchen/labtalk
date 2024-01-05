@@ -1,9 +1,9 @@
 newsheet name:=power col:=3;
 page.active$= "power";
 
-%z = "ln([Book1]Sheet1!1)";
+%z = "ln(Sheet1!1)";
 wks.col1.SetFormula(z);
-%z = "ln([Book1]Sheet1!3)";
+%z = "ln(Sheet1!3)";
 wks.col2.SetFormula(z);
 
 fitLR (1,2); 
@@ -11,13 +11,13 @@ fitLR (1,2);
 %f = "exp(fitlr.a+fitlr.b*(col(1)))";
 wks.col3.SetFormula(f);
 
-[Book1]power!cell(1,2)=fitlr.b;//power
-[Book1]power!cell(2,2)=fitlr.berr;
+power!cell(1,2)=-1*fitlr.b;//power
+power!cell(2,2)=fitlr.berr;
 
-range rr1 = [Book1]Sheet1!col(1); // 定义源范围
-range rr2 = [Book1]power!col(1); // 定义目标范围
+range rr1 = Sheet1!col(1); // 定义源范围
+range rr2 = power!col(1); // 定义目标范围
 rr2 = rr1; // 复制数据
 
 plotxy iy:=Sheet1!(1,2) plot:=202 color:=color(0,0,0);
-plotxy iy:=[Book1]Sheet1!(1,3) plot:=201 ogl:=1;
-plotxy iy:=[Book1]power!(1,3) plot:=200 ogl:=1;
+plotxy iy:=[book2]Sheet1!(1,3) plot:=201 ogl:=1;
+plotxy iy:=[book2]power!(1,3) plot:=200 ogl:=1;
