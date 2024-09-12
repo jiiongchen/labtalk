@@ -8,7 +8,7 @@ rr2 = rr1; // 复制数据
 %z = "ln(Sheet1!3)";
 wks.col2.SetFormula(z);
 
-fitLR (1,2); 
+fitLR (1,2)[55:77]; 
 
 exp!cell(1,2)=1/fitlr.b;
 exp!cell(2,2)=1/(fitlr.b^2)*fitlr.berr;

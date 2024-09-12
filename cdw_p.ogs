@@ -1,0 +1,15 @@
+newsheet name:=average col:=7;
+
+range rr1 = 1!col(1); // 定义源范围
+range rr2 = average!col(1); // 定义目标范围
+rr2 = rr1; // 复制数据
+
+loop(jj,1,7) {
+    loop(ii,1,17) {
+        a=1!cell($(ii),jj)+1!cell($(34-ii+1),jj);
+        2!cell($(ii),1) = ii+1;
+        2!cell($(ii),jj) = a/2.0;
+    };
+};
+
+watch;

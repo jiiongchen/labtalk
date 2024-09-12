@@ -1,0 +1,44 @@
+// 定义变量
+int nCols = wks.ncols;
+int nRows = 276;
+int newCol;
+double a;
+
+page.active$="original";
+iii=0;
+
+// 循环遍历每一列
+for (int ii = 2; ii <= nCols; ii += 1){
+    iii+=1;
+    jjj=0;
+    //newsheet name:=summary cols:=8;
+    // 循环遍历每6行
+    for (int jj = 2; jj <= nRows; jj += 6){
+        // 计算平均值并输出到新表格中;
+       jjj+=1;
+        a=(cell($(jj),$(ii)) + cell($(jj+1), $(ii)) + cell($(jj+2),$(ii)) + cell($(jj+3),$(ii)) + cell($(jj+4),$(ii)) + cell($(jj+5),$(ii)) ) / 6.0;
+        1!cell($(jjj),$(iii+1))=a;
+    }
+}
+
+page.active=1;
+int nCols = wks.ncols;       // 获取列数
+int nRows = wks.nrows;       // 获取行数
+double a;
+
+// 遍历每一列
+for (int col = 2; col <= nCols; col++) {
+    // 计算每列的中点
+    int halfRows = nRows / 2;
+    
+    // 遍历每一行并计算平均值
+    for (int i = 1; i <= halfRows; i++) {
+        avgData = (cell($(i),$(col)) + cell($(nRows - i + 1),$(col))) / 2;         // 计算平均并存储到数组中
+        2!cell($(i),$(col))=avgData;
+    }
+}
+
+page.active=2;
+    for (int i = 1; i <= halfRows; i++) {
+        2!cell($(i),1)=i+1;
+    }
