@@ -21,7 +21,7 @@ for (int ii = 2; ii <= nCols; ii += 1){
     }
 }
 
-page.active=1;
+page.active=2;
 int nCols = wks.ncols;       // 获取列数
 int nRows = wks.nrows;       // 获取行数
 double a;
@@ -34,11 +34,11 @@ for (int col = 2; col <= nCols; col++) {
     // 遍历每一行并计算平均值
     for (int i = 1; i <= halfRows; i++) {
         avgData = (cell($(i),$(col)) + cell($(nRows - i + 1),$(col))) / 2;         // 计算平均并存储到数组中
-        2!cell($(i),$(col))=avgData;
+        3!cell($(i),$(col))=avgData;
     }
 }
 
 page.active=2;
     for (int i = 1; i <= halfRows; i++) {
-        2!cell($(i),1)=i+1;
+        3!cell($(i),1)=i+1;
     }

@@ -1,0 +1,82 @@
+// 初始化 Sheet3 行计数器
+int logRow = 1;
+
+page.active$ = "Sheet2";  // 激活 Sheet2
+int nCols = wks.nCols;
+Sheet3!cell(logRow, 2) = nCols;  // 输出列数
+
+// Step 1: 测试写入是否可用
+Sheet3!cell(logRow, 1) = logRow;
+logRow++;
+
+// Step 2: 变量初始化
+int rowIndex = 2;
+Sheet3!cell(logRow, 1) = logRow; logRow++;
+
+// Step 3: 新建 result 表
+//newsheet name:=result cols:=6;
+Sheet3!cell(logRow, 1) = logRow; logRow++;
+
+// Step 4: 设置 result 表头
+result!col(1)[1]$ = "Y列号";
+result!col(2)[1]$ = "幂指数 (-b)";
+result!col(3)[1]$ = "幂误差 (berr)";
+result!col(4)[1]$ = "截距 (a)";
+result!col(5)[1]$ = "截距误差 (aerr)";
+result!col(6)[1]$ = "R平方";
+Sheet3!cell(logRow, 1) = logRow; logRow++;
+
+// Step 5: 新建 calculated 表
+//newsheet name:=calculated col:=nCols;
+Sheet3!cell(logRow, 1) = logRow; logRow++;
+
+// Step 6: 复制 x 数据
+range rx = Sheet2!col(1);
+range rc = calculated!col(1);
+rc = rx;
+Sheet3!cell(logRow, 1) = logRow; logRow++;
+
+
+// Step 8: 主循环开始
+loop(ii, 5, nCols)
+{
+    Sheet3!cell(logRow, 1) = "Processing column " + $(ii); logRow++; // 标记处理第 ii 列
+
+    // 新建临时表 temp
+    //newsheet name:=temp col:=3;
+    page.active$ = "temp";
+    Sheet3!cell(logRow, 1) = "Created temp sheet"; logRow++;  // 输出临时表创建信息
+
+    // 设置 ln(x)
+    %z = "ln(Sheet1!1)";
+    wks.col1.SetFormula(z);
+    Sheet3!cell(logRow, 1) = "Formula ln(x) set"; logRow++;  // 输出设置 ln(x) 完成
+
+    // 设置 ln(y)
+    %z = "ln(Sheet2!$(ii))";
+    wks.col2.SetFormula(z);
+    Sheet3!cell(logRow, 1) = "Formula ln(y) set"; logRow++;  // 输出设置 ln(y) 完成
+
+    // 执行线性拟合
+    fitLR (1, 2);
+
+    // 输出拟合系数到 Sheet3
+    result!cell(ii, 1) = $(ii);
+    result!cell(ii, 2) = -1 * fitlr.b; 
+    result!cell(ii, 3) = fitlr.berr; 
+    result!cell(ii, 4) = fitlr.a;
+    result!cell(ii, 5) = fitlr.aerr;
+    result!cell(ii, 6) = power(fitlr.r,2);
+
+    // 计算表达式列并写入 calculated
+    %f = "exp(fitlr.a+fitlr.b*(col(1)))";
+    wks.col3.SetFormula(f);
+    range rx = temp!col(3);
+    range rc = calculated!col($(ii));
+    rc = rx;
+    Sheet3!cell(logRow, 1) = "Formula for exp(fit) set"; logRow++;  // 输出公式设置完成
+
+    rowIndex++;
+}
+
+Sheet3!cell(logRow, 1) = "Finished processing all columns"; logRow++;  // 输出完成标记
